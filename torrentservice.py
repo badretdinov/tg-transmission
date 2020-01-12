@@ -15,6 +15,7 @@ class TorrentService:
 
 	def torrent_list(self, update, context):
 		torrents = self.client.get_torrents()
+		torrents = sorted(torrents, key = lambda i: i.queue_position) 
 		keyboard = []
 		for torrent in torrents:
 			tname = '{}, {:01.0f}%, {}'.format(torrent.name, torrent.progress, torrent.status)
