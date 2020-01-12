@@ -1,10 +1,13 @@
-#Telegram Bot for Transmission & file control
-##Dependencies
+# Telegram Bot for Transmission & file control
+
+## Dependencies
+
 * PySocks
 * transmission-rpc
 * python-telegram-bot
 
-##Installation example
+## Installation example
+
 To manage our environment we will use virtualenv. First of all you need to install it and some dependencies.
 
 ```
@@ -60,7 +63,9 @@ sudo systemctl enable tgt.service
 sudo systemctl start tgt.service
 ```
 You can check the status of your service using `sudo systemctl status tgt.service`
-##Config file
+
+## Config file
+
 ```
 {
 	"user_whitelist" : "badretdinov",
