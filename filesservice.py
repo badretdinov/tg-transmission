@@ -67,7 +67,7 @@ class FilesService:
 			d = 't_file_info_{}'.format(i)
 			keyboard.append([InlineKeyboardButton(title, callback_data=d)])
 
-		keyboard.append([InlineKeyboardButton('・Cancel', callback_data='cancel')])
+		keyboard.append([InlineKeyboardButton('✕ Cancel', callback_data='cancel')])
 
 		if update.callback_query:
 			if path != self.url:
@@ -90,6 +90,7 @@ class FilesService:
 		keyboard = [
 			[InlineKeyboardButton('← Back', callback_data='t_file_info_back'), InlineKeyboardButton('☒ Delete', callback_data='t_file_delete_confirm')]
 		]
+		keyboard.append([InlineKeyboardButton('✕ Cancel', callback_data='cancel')])
 		reply_markup = InlineKeyboardMarkup(keyboard)
 		context.bot.edit_message_text(
 			chat_id=update.callback_query.message.chat_id,
