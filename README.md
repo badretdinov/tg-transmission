@@ -5,9 +5,10 @@
 * python-telegram-bot
 
 ##Installation example
-To manage our environment we will use virtualenv. First of all you need to install it.
+To manage our environment we will use virtualenv. First of all you need to install it and some dependencies.
 
 ```
+sudo apt-get install build-essential libssl-dev libffi-dev python3-dev
 sudo apt install python3-venv
 ```
 Copy project to local folder.
@@ -20,15 +21,13 @@ sudo git clone https://github.com/badretdinov/tg-transmission tgt
 Configure virtual enviroment and install dependencies.
 
 ```
-cd /opt
-sudo chown your_username:your_group tgt
-cd tgt
+sudo chown your_username:your_group /opt/tgt
+cd /opt/tgt
 python3 -m venv ENV
 source ENV/bin/activate
-pip install --user -r requirements.txt
+pip install -r requirements.txt
 deactivate
-cd /opt
-sudo chown root:root tgt
+sudo chown root:root /opt/tgt
 ```
 Copy config file and edit it.
 
