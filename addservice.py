@@ -1,7 +1,7 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ConversationHandler
 from io import BytesIO
-import os, re
+import os, re, base64
 
 ADDFOLDERLIST = range(1)
 
@@ -11,10 +11,12 @@ class AddService:
 		self.t_service = t
 
 	def add_torrent_magnet(self, update, context):
+		context.user_data.clear()
 		context.user_data['TorrentMagnet'] = update.message.text
 		return self.choose_dir_for_torrent(update, context)
 
 	def add_torrent_file(self, update, context):
+		context.user_data.clear()
 		doc = update.message.document
 		context.user_data['TorrentDocument'] = doc
 		return self.choose_dir_for_torrent(update, context)
@@ -31,7 +33,6 @@ class AddService:
 
 	def choose_dir_for_torrent(self, update, context):
 		if not update.callback_query:
-			context.user_data.clear()
 			prev_index = ''
 		else:
 			prev_index = re.search('^a_folder_info_([0-9]*?)$', update.callback_query.data).group(1)
@@ -84,7 +85,7 @@ class AddService:
 			torrent_url = context.user_data['TorrentMagnet']
 		except:
 			try:
-				torrent_url = context.user_data['TorrentDocument'].get_file().download_as_bytearray()
+				torrent_url = base64.b64encode(context.user_data['TorrentDocument'].get_file().download_as_bytearray()).decode('ascii')
 			except:
 				context.bot.edit_message_text(
 					chat_id=update.callback_query.message.chat_id,
