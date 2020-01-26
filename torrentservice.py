@@ -49,7 +49,7 @@ class TorrentService:
 			[InlineKeyboardButton('▲ Top', callback_data='t_top_{}'.format(tid)), InlineKeyboardButton('△ Up', callback_data='t_up_{}'.format(tid)), InlineKeyboardButton('▽ Down', callback_data='t_down_{}'.format(tid)), InlineKeyboardButton('▼ Bottom', callback_data='t_bottom_{}'.format(tid))],
 			stop_resume,
 			[InlineKeyboardButton('◉ Verify', callback_data='t_verify_{}'.format(tid))],
-			[InlineKeyboardButton('☒ Remove', callback_data='t_remove_{}'.format(tid))],
+			[InlineKeyboardButton('☒ Remove', callback_data='t_remove_confirm_{}'.format(tid))],
 			[InlineKeyboardButton('✕ Cancel', callback_data='cancel')]
 		]
 		reply_markup = InlineKeyboardMarkup(keyboard)
@@ -159,8 +159,8 @@ class TorrentService:
 		tid = re.search('^t_remove_confirm_(\d+?)$', update.callback_query.data).group(1)
 		tor = self.client.get_torrent(tid)
 		keyboard = [
-			[InlineKeyboardButton('☒ Remove torrent', callback_data='t_remove_only_{}'.format(tid))],
-			[InlineKeyboardButton('⌧ Remove torrent and delete files', callback_data='t_remove_delete_files_{}'.format(tid))],
+			[InlineKeyboardButton('☒ Remove torrent', callback_data='t_remove_{}'.format(tid))],
+			[InlineKeyboardButton('⌧ Remove torrent and delete files', callback_data='t_remove_complete_{}'.format(tid))],
 			[InlineKeyboardButton('✕ Cancel', callback_data='cancel')]
 		]
 		reply_markup = InlineKeyboardMarkup(keyboard)
