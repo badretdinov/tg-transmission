@@ -9,6 +9,15 @@ class TorrentService:
 	def __init__(self, address, port, username, password): 
 		self.client = Client(address=address, port=port, username=username, password=password)
 
+	def torrent_icon(self, status):
+		if status == 'stopped':
+			return '⏹'
+		else:
+			return '▶️'
+
+	def torrent_description(self, torrent):
+		return '{} {} {:01.0f}%, {}'.format(self.torrent_icon(torrent.status), torrent.status, torrent.progress, torrent.name)
+
 	def add_torrent(self, url, path):
 		tor = self.client.add_torrent(url, download_dir=path)
 		return tor.name
@@ -18,7 +27,7 @@ class TorrentService:
 		torrents = sorted(torrents, key = lambda i: i.queue_position) 
 		keyboard = []
 		for torrent in torrents:
-			tname = '{}, {:01.0f}%, {}'.format(torrent.name, torrent.progress, torrent.status)
+			tname = self.torrent_description(torrent)
 			keyboard.append([InlineKeyboardButton(tname, callback_data='t_info_{}'.format(torrent.id))])
 		keyboard.append([InlineKeyboardButton('✕ Cancel', callback_data='cancel')])
 		reply_markup = InlineKeyboardMarkup(keyboard)
@@ -49,7 +58,7 @@ class TorrentService:
 			chat_id=query.message.chat_id,
 			message_id=query.message.message_id,
 			reply_markup=reply_markup,
-			text=tor.name
+			text=self.torrent_description(tor)
 		)
 
 		return TORRENTINFO
