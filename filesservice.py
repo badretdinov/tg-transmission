@@ -12,11 +12,12 @@ class FilesService:
 		folders = []
 		files = []
 		for name in os.listdir(path):
-			current_path = os.path.join(path, name)
-			if os.path.isdir(current_path):
-				folders.append(name)
-			elif incl_files:
-				files.append(name)
+			if not name.startswith('.'):
+				current_path = os.path.join(path, name)
+				if os.path.isdir(current_path):
+					folders.append(name)
+				elif incl_files:
+					files.append(name)
 
 		return folders + files
 
