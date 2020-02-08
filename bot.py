@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 def start(update, context):
 	keyboard = [[KeyboardButton("Torrents")],
 				[KeyboardButton("Files")]]
-	reply_markup = ReplyKeyboardMarkup(keyboard)
+	reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard = True)
 	update.message.reply_text('Hello!', reply_markup=reply_markup)
 
 def cancel(update, context):
