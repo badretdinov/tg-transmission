@@ -42,7 +42,7 @@ class TorrentService:
 		if tor.status == 'stopped':
 			stop_resume = [InlineKeyboardButton('▷ Resume', callback_data='t_resume_{}'.format(tid)), InlineKeyboardButton('▶︎ Resume now', callback_data='t_resume_now_{}'.format(tid))]
 		elif tor.status == 'download pending':
-			stop_resume = [InlineKeyboardButton('▶︎ Resume now', callback_data='t_resume_now_{}'.format(tid))]
+			stop_resume = [InlineKeyboardButton('▶︎ Resume now', callback_data='t_resume_now_{}'.format(tid)), InlineKeyboardButton('◼︎ Stop', callback_data='t_stop_{}'.format(tid))]
 		else:
 			stop_resume = [InlineKeyboardButton('◼︎ Stop', callback_data='t_stop_{}'.format(tid))]
 		keyboard = [
