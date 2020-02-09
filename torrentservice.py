@@ -71,7 +71,7 @@ class TorrentService:
 		context.bot.edit_message_text(
 			chat_id=query.message.chat_id,
 			message_id=query.message.message_id,
-			text='{} moved up'.format(tor.name)
+			text='{} has been moved up'.format(tor.name)
 		)
 		return ConversationHandler.END
 
@@ -83,7 +83,7 @@ class TorrentService:
 		context.bot.edit_message_text(
 			chat_id=query.message.chat_id,
 			message_id=query.message.message_id,
-			text='{} moved down'.format(tor.name)
+			text='{} has been moved down'.format(tor.name)
 		)
 		return ConversationHandler.END
 
@@ -95,7 +95,7 @@ class TorrentService:
 		context.bot.edit_message_text(
 			chat_id=query.message.chat_id,
 			message_id=query.message.message_id,
-			text='{} moved to top'.format(tor.name)
+			text='{} has been moved to top'.format(tor.name)
 		)
 		return ConversationHandler.END
 
@@ -107,7 +107,7 @@ class TorrentService:
 		context.bot.edit_message_text(
 			chat_id=query.message.chat_id,
 			message_id=query.message.message_id,
-			text='{} moved to bottom'.format(tor.name)
+			text='{} has been moved to bottom'.format(tor.name)
 		)
 		return ConversationHandler.END
 
@@ -118,7 +118,7 @@ class TorrentService:
 		context.bot.edit_message_text(
 			chat_id=update.callback_query.message.chat_id,
 			message_id=update.callback_query.message.message_id,
-			text='{} stopped'.format(tor.name)
+			text='{} has been stopped'.format(tor.name)
 		)
 		return ConversationHandler.END
 
@@ -129,7 +129,7 @@ class TorrentService:
 		context.bot.edit_message_text(
 			chat_id=update.callback_query.message.chat_id,
 			message_id=update.callback_query.message.message_id,
-			text='{} resumed'.format(tor.name)
+			text='{} has been resumed'.format(tor.name)
 		)
 		return ConversationHandler.END
 
@@ -140,7 +140,7 @@ class TorrentService:
 		context.bot.edit_message_text(
 			chat_id=update.callback_query.message.chat_id,
 			message_id=update.callback_query.message.message_id,
-			text='{} resumed'.format(tor.name)
+			text='{} has been resumed'.format(tor.name)
 		)
 		return ConversationHandler.END
 
@@ -151,7 +151,7 @@ class TorrentService:
 		context.bot.edit_message_text(
 			chat_id=update.callback_query.message.chat_id,
 			message_id=update.callback_query.message.message_id,
-			text='{} verification started'.format(tor.name)
+			text='{} verification has been started'.format(tor.name)
 		)
 		return ConversationHandler.END
 
@@ -168,7 +168,7 @@ class TorrentService:
 			chat_id=update.callback_query.message.chat_id,
 			message_id=update.callback_query.message.message_id,
 			reply_markup=reply_markup,
-			text='Remove {}?'.format(tor.name)
+			text='Are you sure you want to remove {}?'.format(tor.name)
 		)
 		return REMOVETORRENT
 
@@ -179,7 +179,7 @@ class TorrentService:
 		context.bot.edit_message_text(
 			chat_id=update.callback_query.message.chat_id,
 			message_id=update.callback_query.message.message_id,
-			text='{} removed'.format(tor.name)
+			text='{} has been removed'.format(tor.name)
 		)
 		return ConversationHandler.END
 
@@ -190,6 +190,6 @@ class TorrentService:
 		context.bot.edit_message_text(
 			chat_id=update.callback_query.message.chat_id,
 			message_id=update.callback_query.message.message_id,
-			text='{} removed'.format(tor.name)
+			text='{} has been removed'.format(tor.name)
 		)
 		return ConversationHandler.END

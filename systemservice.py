@@ -20,7 +20,7 @@ class SystemService:
 		context.bot.edit_message_text(
 			chat_id=query.message.chat_id,
 			message_id=query.message.message_id,
-			text='MiniDLNA restarted'
+			text='MiniDLNA has been restarted'
 		)
 		return ConversationHandler.END
 
@@ -29,7 +29,7 @@ class SystemService:
 		context.bot.edit_message_text(
 			chat_id=query.message.chat_id,
 			message_id=query.message.message_id,
-			text='Reboot executed'
+			text='Reboot has been executed'
 		)
 		os.system('sudo reboot')
 		return ConversationHandler.END
@@ -39,7 +39,7 @@ class SystemService:
 		context.bot.edit_message_text(
 			chat_id=query.message.chat_id,
 			message_id=query.message.message_id,
-			text='Poweroff executed'
+			text='Poweroff has been executed'
 		)
 		os.system('sudo poweroff')
 		return ConversationHandler.END

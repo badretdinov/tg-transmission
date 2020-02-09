@@ -98,7 +98,7 @@ class AddService:
 		context.bot.edit_message_text(
 			chat_id=update.callback_query.message.chat_id,
 			message_id=update.callback_query.message.message_id,
-			text='{} added'.format(t_name)
+			text='{} has been added'.format(t_name)
 		)
 		context.user_data.clear()
 		return ConversationHandler.END

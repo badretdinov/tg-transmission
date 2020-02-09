@@ -107,12 +107,13 @@ class FilesService:
 			[InlineKeyboardButton('☒ Delete', callback_data='t_file_delete')],
 			[InlineKeyboardButton('✕ Cancel', callback_data='cancel')]
 		]
+		object_to_delete = os.path.basename(path)
 		reply_markup = InlineKeyboardMarkup(keyboard)
 		context.bot.edit_message_text(
 			chat_id=update.callback_query.message.chat_id,
 			message_id=update.callback_query.message.message_id,
 			reply_markup=reply_markup,
-			text='Delete {}?'.format(path)
+			text='Are you sure you want to delete {}?'.format(object_to_delete)
 		)
 		return REMOVEFILECONFIRM
 
@@ -122,10 +123,11 @@ class FilesService:
 			shutil.rmtree(path)
 		else:
 			os.remove(path)
+		removed_object = os.path.basename(path)
 		context.bot.edit_message_text(
 			chat_id=update.callback_query.message.chat_id,
 			message_id=update.callback_query.message.message_id,
-			text='{} deleted'.format(path)
+			text='{} has been deleted'.format(removed_object)
 		)
 		context.user_data.clear()
 		return ConversationHandler.END
