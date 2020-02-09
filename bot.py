@@ -7,6 +7,7 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, Callb
 from torrentservice import *
 from filesservice import *
 from addservice import *
+from systemservice import *
 from transmission_rpc import Client
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
@@ -14,7 +15,8 @@ logger = logging.getLogger(__name__)
 
 def start(update, context):
 	keyboard = [[KeyboardButton("Torrents")],
-				[KeyboardButton("Files")]]
+				[KeyboardButton("Files")],
+				[KeyboardButton("System commands")]]
 	reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard = True)
 	update.message.reply_text('Hello!', reply_markup=reply_markup)
 
@@ -46,6 +48,7 @@ def main(token, root_dir, rpc, whitelist, proxy):
 	t_service = TorrentService(rpc['address'], rpc['port'], rpc['username'], rpc['password'])
 	f_service = FilesService(root_dir)
 	a_service = AddService(f_service, t_service)
+	s_service = SystemService()
 
 	updater = Updater(token, use_context=True, request_kwargs=request_kwargs)
 	dp = updater.dispatcher
@@ -54,7 +57,8 @@ def main(token, root_dir, rpc, whitelist, proxy):
 				 MessageHandler(Filters.regex(r'^Torrents$') & Filters.chat(username=whitelist), t_service.torrent_list),
 				 MessageHandler(Filters.regex(r'^Files$') & Filters.chat(username=whitelist), f_service.file_list),
 				 MessageHandler(Filters.document & Filters.chat(username=whitelist), a_service.add_torrent_file),
-				 MessageHandler(Filters.regex(r'^magnet:\?') & Filters.chat(username=whitelist), a_service.add_torrent_magnet)]
+				 MessageHandler(Filters.regex(r'^magnet:\?') & Filters.chat(username=whitelist), a_service.add_torrent_magnet),
+				 MessageHandler(Filters.regex(r'^System commands$') & Filters.chat(username=whitelist), s_service.commands_list)]
 
 	torrents_handler = ConversationHandler(
 		entry_points=[MessageHandler(Filters.regex(r'^Torrents$') & Filters.chat(username=whitelist), t_service.torrent_list)],
@@ -97,10 +101,20 @@ def main(token, root_dir, rpc, whitelist, proxy):
 		},
 		fallbacks=fallbacks
 	)
+	commands_handler = ConversationHandler(
+		entry_points=[MessageHandler(Filters.regex(r'^System commands$') & Filters.chat(username=whitelist), s_service.commands_list)],
+		states={
+			SYSTEMCOMMANDS: [CallbackQueryHandler(s_service.restart_minidlna, pattern='^restart_minidlna$'),
+							CallbackQueryHandler(s_service.reboot, pattern='^reboot$'),
+							CallbackQueryHandler(s_service.poweroff, pattern='^poweroff$')]
+		},
+		fallbacks=fallbacks
+	)
 
 	dp.add_handler(torrents_handler)
 	dp.add_handler(files_handler)
 	dp.add_handler(add_handler)
+	dp.add_handler(commands_handler)
 	dp.add_handler(CommandHandler('start', start, Filters.chat(username=whitelist)))
 	dp.add_error_handler(error)
 
