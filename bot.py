@@ -48,7 +48,7 @@ def main(token, root_dir, rpc, whitelist, proxy):
 	t_service = TorrentService(rpc['address'], rpc['port'], rpc['username'], rpc['password'])
 	f_service = FilesService(root_dir)
 	a_service = AddService(f_service, t_service)
-	s_service = SystemService()
+	s_service = SystemService(root_dir)
 
 	updater = Updater(token, use_context=True, request_kwargs=request_kwargs)
 	dp = updater.dispatcher
@@ -106,7 +106,8 @@ def main(token, root_dir, rpc, whitelist, proxy):
 		states={
 			SYSTEMCOMMANDS: [CallbackQueryHandler(s_service.restart_minidlna, pattern='^restart_minidlna$'),
 							CallbackQueryHandler(s_service.reboot, pattern='^reboot$'),
-							CallbackQueryHandler(s_service.poweroff, pattern='^poweroff$')]
+							CallbackQueryHandler(s_service.poweroff, pattern='^poweroff$'),
+							CallbackQueryHandler(s_service.get_free_space, pattern='^free_space$')]
 		},
 		fallbacks=fallbacks
 	)
