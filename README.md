@@ -41,7 +41,7 @@ sudo nano /etc/tgt.conf
 Create unit file with next content
 
 ```
-sudo nano /lib/systemd/system/tgt.service
+sudo nano /etc/systemd/system/tgt.service
 ```
 ```
 [Unit]
