@@ -11,7 +11,7 @@ class FilesService:
 	def listdir(self, path, incl_files):
 		folders = []
 		files = []
-		for name in os.listdir(path):
+		for name in sorted(os.listdir(path)):
 			if not name.startswith('.'):
 				current_path = os.path.join(path, name)
 				if os.path.isdir(current_path):
