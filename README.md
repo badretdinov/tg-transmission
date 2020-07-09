@@ -1,5 +1,8 @@
 # Telegram Bot for Transmission & file control
 
+## Example
+![](./images/example.gif)
+
 ## Dependencies
 
 * PySocks
